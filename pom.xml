@@ -10,7 +10,7 @@
 
 
   <properties>
-    <vertx.version>3.3.0-SNAPSHOT</vertx.version>
+    <vertx.version>3.3.3</vertx.version>
     <main.verticle>NamasteVerticle.rb</main.verticle>
   </properties>
 
@@ -29,8 +29,8 @@
 
     <dependency>
       <groupId>io.vertx</groupId>
-      <artifactId>vertx-hazelcast</artifactId>
-      <version>${vertx.version}</version>
+      <artifactId>vertx-zookeeper</artifactId>
+      <version>3.3.3</version>
     </dependency>
 
     <dependency>
@@ -131,18 +131,7 @@
                       <port>5701</port>
                     </ports>
                     <workdir>/opt</workdir>
-                    <entryPoint>
-                      <exec>
-                        <arg>java</arg>
-                        <arg>-jar</arg>
-                        <arg>${project.artifactId}-${project.version}-fat.jar</arg>
-                        <arg>-cluster</arg>
-                        <arg>-cp</arg>
-                        <arg>.</arg>
-                        <arg>-conf</arg>
-                        <arg>config.json</arg>
-                      </exec>
-                    </entryPoint>
+                    <entryPoint>java -Dvertx.zookeeper.hosts=${ZOOKEEPER_SERVICE_HOST} -jar ${project.artifactId}-${project.version}-fat.jar -cluster -cp . -conf config.json</entryPoint>
                     <runCmds>
                       <runcmd>chmod -R 777 /opt</runcmd>
                       <runcmd>chmod -R 777 /opt/*</runcmd>
